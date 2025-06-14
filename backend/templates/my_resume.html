@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Resume</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px;
+        }
+        .resume-box {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        p {
+            margin: 5px 0;
+            white-space: pre-line;
+        }
+        .top-btns {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .top-btns a, .top-btns button {
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-left: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-box">
+        <div class="top-btns">
+            <a href="{{ url_for('resume_form') }}">Edit Resume</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <!-- Download Resume Button -->
+            <form method="POST" action="{{ url_for('download_resume') }}">
+                <button type="submit">Download Resume as PDF</button>
+            </form>
+        </div>
+
+        {% if resume %}
+            <h1>{{ session['name'] }}</h1>
+            <p><strong>Phone:</strong> {{ resume.phone }}</p>
+            <p><strong>Address:</strong> {{ resume.address }}</p>
+
+            <h2>Summary</h2>
+            <p>{{ resume.summary }}</p>
+
+            <h2>Education</h2>
+            <p>{{ resume.education }}</p>
+
+            <h2>Experience</h2>
+            <p>{{ resume.experience }}</p>
+
+            <h2>Skills</h2>
+            <p>{{ resume.skills }}</p>
+
+            <h2>Projects</h2>
+            <p>{{ resume.projects }}</p>
+        {% else %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
